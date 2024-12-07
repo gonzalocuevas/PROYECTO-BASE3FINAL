@@ -1,0 +1,139 @@
+<section class="container mt-4" style="max-width: 90%;">
+  <div class="row">
+    <h3 class="text-center fw-normal mt-4">Empleados Registrados</h3>
+    <table class="table mx-auto my-3" style="max-width: 80%;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Turno</th>
+          <th scope="col">Línea Asignada</th>
+          <th scope="col">Rol</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each empleados}}
+        <tr>
+          <th scope="row">{{this.id_empleado}}</th>
+          <td>{{this.nombre_empleado}}</td>
+          <td>{{this.turno}}</td>
+          <td>{{this.linea_asignada_id}}</td>
+          <td>{{this.rol}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#editEmpleadoModal{{this.id_empleado}}">Editar</button>
+
+            <div class="modal fade" id="editEmpleadoModal{{this.id_empleado}}" tabindex="-1"
+              aria-labelledby="editEmpleadoLabel{{this.id_empleado}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editEmpleadoLabel{{this.id_empleado}}">Editar Empleado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="/editarEmpleado">
+                      <div class="mb-3">
+                        <label class="form-label">Nombre del Empleado</label>
+                        <input type="text" class="form-control" name="nombre_empleado" value="{{this.nombre_empleado}}" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Turno</label>
+                        <input type="text" class="form-control" name="turno" value="{{this.turno}}">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Línea Asignada</label>
+                        <input type="number" class="form-control" name="linea_asignada_id" value="{{this.linea_asignada_id}}">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Rol</label>
+                        <input type="text" class="form-control" name="rol" value="{{this.rol}}">
+                      </div>
+
+                      <input type="hidden" name="id_empleado" value="{{this.id_empleado}}">
+
+                      <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#deleteEmpleadoModal{{this.id_empleado}}">Borrar</button>
+
+            <div class="modal fade" id="deleteEmpleadoModal{{this.id_empleado}}" tabindex="-1"
+              aria-labelledby="deleteEmpleadoLabel{{this.id_empleado}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteEmpleadoLabel{{this.id_empleado}}">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar a <strong>{{this.nombre_empleado}}</strong> de la lista de empleados?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form method="POST" action="/borrarEmpleado">
+                      <input type="hidden" name="id_empleado" value="{{this.id_empleado}}">
+                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <button type="button" class="btn btn-danger btn-large mt-3 mb-5 mx-auto" data-bs-toggle="modal"
+      data-bs-target="#createEmpleadoModal" style="max-width:70%;">Registrar Nuevo Empleado</button>
+
+    <div class="modal fade" id="createEmpleadoModal" tabindex="-1" aria-labelledby="createEmpleadoLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="createEmpleadoLabel">Registrar Nuevo Empleado</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/crearEmpleado">
+              <div class="mb-3">
+                <label class="form-label">Nombre del Empleado</label>
+                <input type="text" class="form-control" name="nombre_empleado" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Turno</label>
+                <input type="text" class="form-control" name="turno">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Línea Asignada</label>
+                <input type="number" class="form-control" name="linea_asignada_id">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Rol</label>
+                <input type="text" class="form-control" name="rol">
+              </div>
+
+              <button type="submit" class="btn btn-danger">Registrar Empleado</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,27 @@
+<section class="container mt-4" style="max-width: 90%;">
+  <div class="row">
+    <h3 class="text-center fw-normal mt-4">Jefes de Producción Registrados</h3>
+    <table class="table mx-auto my-3" style="max-width: 80%;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Línea Asignada</th>
+          <th scope="col">Experiencia</th>
+          <th scope="col">Nivel de Responsabilidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each jefesdeproduccion}}
+        <tr>
+          <th scope="row">{{this.id_jefe}}</th>
+          <td>{{this.nombre_jefe}}</td>
+          <td>{{this.linea_asignada_id}}</td>
+          <td>{{this.experiencia}}</td>
+          <td>{{this.nivel_responsabilidad}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

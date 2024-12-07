@@ -1,0 +1,143 @@
+<section class="container mt-4" style="max-width: 90%;">
+  <div class="row">
+    <h3 class="text-center fw-normal mt-4">Clientes Registrados</h3>
+    <table class="table mx-auto my-3" style="max-width: 80%;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Dirección</th>
+          <th scope="col">Teléfono</th>
+          <th scope="col">Correo</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each clientes}}
+        <tr>
+          <th scope="row">{{this.id_cliente}}</th>
+          <td>{{this.nombre_cliente}}</td>
+          <td>{{this.direccion_cliente}}</td>
+          <td>{{this.telefono_cliente}}</td>
+          <td>{{this.correo_cliente}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#editClienteModal{{this.id_cliente}}">Editar</button>
+
+            <div class="modal fade" id="editClienteModal{{this.id_cliente}}" tabindex="-1"
+              aria-labelledby="editClienteLabel{{this.id_cliente}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editClienteLabel{{this.id_cliente}}">Editar Cliente</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="/editarCliente">
+                      <div class="mb-3">
+                        <label class="form-label">Nombre del Cliente</label>
+                        <input type="text" class="form-control" name="nombre_cliente"
+                          value="{{this.nombre_cliente}}" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Dirección</label>
+                        <input type="text" class="form-control" name="direccion_cliente"
+                          value="{{this.direccion_cliente}}">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" name="telefono_cliente"
+                          value="{{this.telefono_cliente}}">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        <input type="email" class="form-control" name="correo_cliente"
+                          value="{{this.correo_cliente}}">
+                      </div>
+
+                      <input type="hidden" name="id_cliente" value="{{this.id_cliente}}">
+
+                      <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#deleteClienteModal{{this.id_cliente}}">Borrar</button>
+
+            <div class="modal fade" id="deleteClienteModal{{this.id_cliente}}" tabindex="-1"
+              aria-labelledby="deleteClienteLabel{{this.id_cliente}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteClienteLabel{{this.id_cliente}}">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar a <strong>{{this.nombre_cliente}}</strong> de la lista de clientes?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form method="POST" action="/borrarCliente">
+                      <input type="hidden" name="id_cliente" value="{{this.id_cliente}}">
+                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <button type="button" class="btn btn-danger btn-large mt-3 mb-5 mx-auto" data-bs-toggle="modal"
+      data-bs-target="#createClienteModal" style="max-width:70%;">Registrar Nuevo Cliente</button>
+
+    <div class="modal fade" id="createClienteModal" tabindex="-1" aria-labelledby="createClienteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="createClienteLabel">Registrar Nuevo Cliente</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/crearCliente">
+              <div class="mb-3">
+                <label class="form-label">Nombre del Cliente</label>
+                <input type="text" class="form-control" name="nombre_cliente" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Dirección</label>
+                <input type="text" class="form-control" name="direccion_cliente">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Teléfono</label>
+                <input type="text" class="form-control" name="telefono_cliente">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Correo</label>
+                <input type="email" class="form-control" name="correo_cliente">
+              </div>
+
+              <button type="submit" class="btn btn-danger">Registrar Cliente</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

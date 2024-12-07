@@ -1,0 +1,139 @@
+<section class="container mt-4" style="max-width: 90%;">
+  <div class="row">
+    <h3 class="text-center fw-normal mt-4">Puntos de Entrega Registrados</h3>
+    <table class="table mx-auto my-3" style="max-width: 80%;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Ubicación</th>
+          <th scope="col">Horario de Recepción</th>
+          <th scope="col">ID Cliente</th>
+          <th scope="col">ID Transporte</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each puntosEntrega}}
+        <tr>
+          <th scope="row">{{this.id_punto_entrega}}</th>
+          <td>{{this.ubicacion}}</td>
+          <td>{{this.horario_recepcion}}</td>
+          <td>{{this.cliente_id}}</td>
+          <td>{{this.transporte_id}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#editPuntoEntregaModal{{this.id_punto_entrega}}">Editar</button>
+
+            <div class="modal fade" id="editPuntoEntregaModal{{this.id_punto_entrega}}" tabindex="-1"
+              aria-labelledby="editPuntoEntregaLabel{{this.id_punto_entrega}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editPuntoEntregaLabel{{this.id_punto_entrega}}">Editar Punto de Entrega</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="/editarPuntoEntrega">
+                      <div class="mb-3">
+                        <label class="form-label">Ubicación</label>
+                        <input type="text" class="form-control" name="ubicacion" value="{{this.ubicacion}}" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Horario de Recepción</label>
+                        <input type="text" class="form-control" name="horario_recepcion" value="{{this.horario_recepcion}}">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">ID Cliente</label>
+                        <input type="number" class="form-control" name="cliente_id" value="{{this.cliente_id}}">
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">ID Transporte</label>
+                        <input type="number" class="form-control" name="transporte_id" value="{{this.transporte_id}}">
+                      </div>
+
+                      <input type="hidden" name="id_punto_entrega" value="{{this.id_punto_entrega}}">
+
+                      <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#deletePuntoEntregaModal{{this.id_punto_entrega}}">Borrar</button>
+
+            <div class="modal fade" id="deletePuntoEntregaModal{{this.id_punto_entrega}}" tabindex="-1"
+              aria-labelledby="deletePuntoEntregaLabel{{this.id_punto_entrega}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deletePuntoEntregaLabel{{this.id_punto_entrega}}">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar el Punto de Entrega en <strong>{{this.ubicacion}}</strong>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form method="POST" action="/borrarPuntoEntrega">
+                      <input type="hidden" name="id_punto_entrega" value="{{this.id_punto_entrega}}">
+                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <button type="button" class="btn btn-danger btn-large mt-3 mb-5 mx-auto" data-bs-toggle="modal"
+      data-bs-target="#createPuntoEntregaModal" style="max-width:70%;">Registrar Nuevo Punto de Entrega</button>
+
+    <div class="modal fade" id="createPuntoEntregaModal" tabindex="-1" aria-labelledby="createPuntoEntregaLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="createPuntoEntregaLabel">Registrar Nuevo Punto de Entrega</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/crearPuntoEntrega">
+              <div class="mb-3">
+                <label class="form-label">Ubicación</label>
+                <input type="text" class="form-control" name="ubicacion" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Horario de Recepción</label>
+                <input type="text" class="form-control" name="horario_recepcion">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">ID Cliente</label>
+                <input type="number" class="form-control" name="cliente_id">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">ID Transporte</label>
+                <input type="number" class="form-control" name="transporte_id">
+              </div>
+
+              <button type="submit" class="btn btn-danger">Registrar Punto de Entrega</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

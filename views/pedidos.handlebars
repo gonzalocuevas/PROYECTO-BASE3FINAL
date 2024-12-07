@@ -1,0 +1,170 @@
+<section class="container mt-4" style="max-width: 90%;">
+  <div class="row">
+    <h3 class="text-center fw-normal mt-4">Pedidos Registrados</h3>
+    <table class="table mx-auto my-3" style="max-width: 80%;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Fecha Pedido</th>
+          <th scope="col">Cliente</th>
+          <th scope="col">Línea de Producción</th>
+          <th scope="col">Cantidad Total</th>
+          <th scope="col">Estado Pedido</th>
+          <th scope="col">Variedad de Vino</th>
+          <th scope="col">Transporte</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each pedidos}}
+        <tr>
+          <th scope="row">{{this.id_pedido}}</th>
+          <td>{{this.fecha_pedido}}</td>
+          <td>{{this.cliente_id}}</td>
+          <td>{{this.linea_produccion_id}}</td>
+          <td>{{this.cantidad_total}}</td>
+          <td>{{this.estado_pedido}}</td>
+          <td>{{this.variedad_vino}}</td>
+          <td>{{this.transporte_id}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#editPedidoModal{{this.id_pedido}}">Editar</button>
+
+            <div class="modal fade" id="editPedidoModal{{this.id_pedido}}" tabindex="-1"
+              aria-labelledby="editPedidoLabel{{this.id_pedido}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editPedidoLabel{{this.id_pedido}}">Editar Pedido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form method="POST" action="/editarPedido">
+                      <div class="mb-3">
+                        <label class="form-label">Fecha del Pedido</label>
+                        <input type="date" class="form-control" name="fecha_pedido" value="{{this.fecha_pedido}}" readonly required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Cliente</label>
+                        <input type="text" class="form-control" name="cliente_id" value="{{this.cliente_id}}" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Línea de Producción</label>
+                        <input type="text" class="form-control" name="linea_produccion_id" value="{{this.linea_produccion_id}}" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Cantidad Total</label>
+                        <input type="number" class="form-control" name="cantidad_total" value="{{this.cantidad_total}}" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Estado del Pedido</label>
+                        <input type="text" class="form-control" name="estado_pedido" value="{{this.estado_pedido}}" readonly required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Variedad de Vino</label>
+                        <input type="text" class="form-control" name="variedad_vino" value="{{this.variedad_vino}}" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Transporte</label>
+                        <input type="text" class="form-control" name="transporte_id" value="{{this.transporte_id}}" required>
+                      </div>
+
+                      <input type="hidden" name="id_pedido" value="{{this.id_pedido}}">
+
+                      <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+              data-bs-target="#deletePedidoModal{{this.id_pedido}}">Borrar</button>
+
+            <div class="modal fade" id="deletePedidoModal{{this.id_pedido}}" tabindex="-1"
+              aria-labelledby="deletePedidoLabel{{this.id_pedido}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deletePedidoLabel{{this.id_pedido}}">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar el pedido #<strong>{{this.id_pedido}}</strong>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form method="POST" action="/borrarPedido">
+                      <input type="hidden" name="id_pedido" value="{{this.id_pedido}}">
+                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <button type="button" class="btn btn-danger btn-large mt-3 mb-5 mx-auto" data-bs-toggle="modal"
+      data-bs-target="#createPedidoModal" style="max-width:70%;">Registrar Nuevo Pedido</button>
+
+    <div class="modal fade" id="createPedidoModal" tabindex="-1" aria-labelledby="createPedidoLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="createPedidoLabel">Registrar Nuevo Pedido</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/crearPedido">
+              <div class="mb-3">
+                <label class="form-label">Cliente</label>
+                <input type="text" class="form-control" name="cliente_id" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Línea de Producción</label>
+                <input type="text" class="form-control" name="linea_produccion_id" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Cantidad Total</label>
+                <input type="number" class="form-control" name="cantidad_total" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Estado del Pedido</label>
+                <input type="text" class="form-control" name="estado_pedido" value="Pendiente" readonly required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Variedad de Vino</label>
+                <input type="text" class="form-control" name="variedad_vino" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Transporte</label>
+                <input type="text" class="form-control" name="transporte_id" required>
+              </div>
+
+              <button type="submit" class="btn btn-danger">Registrar Pedido</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

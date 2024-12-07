@@ -1,0 +1,101 @@
+<div class="container mt-5">
+    <div class="consultas">
+        <form id="formulario-consulta" action="/consultas" method="POST">
+            <h3>Consultas</h3>
+            <div class="mb-3">
+                <label for="consulta" class="form-label">Selecciona una consulta</label>
+                <select id="consulta" name="consulta" class="form-select" onchange="mostrarCampoCliente()">
+                    <option value="consulta1">¿Qué pedidos ha realizado un cliente específico, incluyendo la fecha, variedad y cantidad de vino solicitados?</option>
+                    <option value="consulta2">¿Qué línea de producción está asignada para producir una variedad de vino específica?</option>
+                    <option value="consulta3">¿Cuál fue la cantidad de vino producida en una línea específica en un día determinado?</option>
+                    <option value="consulta4">¿Qué camiones están disponibles para el transporte hoy?</option>
+                    <option value="consulta5">¿Cuánta cantidad de corchos hay disponible en el inventario?</option>
+                    <option value="consulta6">¿Qué jefe de producción está asignado a una línea de producción específica?</option>
+                    <option value="consulta7">¿Qué cantidad de vino se produjo ayer en todas las líneas?</option>
+                    <option value="consulta8">¿Cuáles son los pedidos pendientes de entrega?</option>
+                    <option value="consulta9">¿En qué turno trabaja un operador específico?</option>
+                    <option value="consulta10">¿Qué línea de producción tiene la mayor capacidad?</option>
+                </select>
+            </div>
+
+            <div id="campo-cliente" style="display: none;" class="mb-3">
+                <label for="nombre_cliente" class="form-label">Nombre del Cliente:</label>
+                <input class="form-control" type="text" id="nombre_cliente" name="nombre_cliente" placeholder="Ingrese el nombre del cliente">
+            </div>
+
+            <div id="campo-variedad-vino" style="display: none;" class="mb-3">
+                <label for="variedad_vino" class="form-label">Variedad de Vino:</label>
+                <input class="form-control" type="text" id="variedad_vino" name="variedad_vino" placeholder="Ingrese la variedad de vino">
+            </div>
+
+            <div id="campo-linea-fecha" style="display: none;" class="mb-3">
+                <label for="id_linea_produccion" class="form-label">ID de Línea de Producción:</label>
+                <input class="form-control" type="number" id="id_linea_produccion" name="id_linea_produccion" placeholder="Ingrese el ID de la línea de producción">
+                <label for="fecha_pedido" class="form-label">Fecha de Pedido:</label>
+                <input class="form-control" type="date" id="fecha_pedido" name="fecha_pedido" placeholder="Seleccione la fecha del pedido">
+            </div>
+
+            <div id="campo-consulta4" style="display: none;">
+                <p>No se requiere entrada.</p>
+            </div>
+
+            <div id="campo-consulta5" style="display: none;">
+                <p>No se requiere entrada.</p>
+            </div>
+
+            <div id="campo-id-linea" style="display: none;" class="mb-3">
+                <label for="id_linea" class="form-label">ID de Línea de Producción:</label>
+                <input class="form-control" type="number" id="id_linea" name="id_linea" placeholder="Ingrese el ID de la línea de producción">
+            </div>
+
+            <div id="campo-empleado" style="display: none;" class="mb-3">
+                <label for="nombre_empleado" class="form-label">Nombre del Empleado:</label>
+                <input class="form-control" type="text" id="nombre_empleado" name="nombre_empleado" placeholder="Ingrese el nombre del empleado">
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" class="btn btn-danger" id="accionarConsulta">Consultar</button>
+            </div>
+        </form>
+
+        <div class="resultado mt-4">
+            <div id="resultados">
+                {{#if resultados}}
+                    <h4>Resultados:</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                {{#each resultados.[0]}}
+                                    <th>{{@key}}</th>
+                                {{/each}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each resultados}}
+                                <tr>
+                                    {{#each this}}
+                                        <td>{{this}}</td>
+                                    {{/each}}
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                {{else}}
+                    <p>No se han realizado consultas.</p>
+                {{/if}}
+            </div>   
+        </div>
+    </div>
+</div>
+
+<script>
+    function mostrarCampoCliente() {
+        const consulta = document.getElementById('consulta').value;
+        
+        document.getElementById('campo-cliente').style.display = consulta === 'consulta1' ? 'block' : 'none';
+        document.getElementById('campo-variedad-vino').style.display = consulta === 'consulta2' ? 'block' : 'none';
+        document.getElementById('campo-linea-fecha').style.display = consulta === 'consulta3' ? 'block' : 'none';
+        document.getElementById('campo-id-linea').style.display = consulta === 'consulta6' ? 'block' : 'none';
+        document.getElementById('campo-empleado').style.display = consulta === 'consulta9' ? 'block' : 'none';
+    }
+</script>

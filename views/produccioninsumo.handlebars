@@ -1,0 +1,25 @@
+<section class="container mt-4" style="max-width: 90%;">
+  <div class="row">
+    <h3 class="text-center fw-normal mt-4">Producción de Insumos Registrados</h3>
+    <table class="table mx-auto my-3" style="max-width: 80%;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">ID Línea de Producción</th>
+          <th scope="col">ID Insumo</th>
+          <th scope="col">Cantidad Utilizada</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each produccioninsumos}}
+        <tr>
+          <th scope="row">{{this.id_produccion_insumo}}</th>
+          <td>{{this.linea_produccion_id}}</td>
+          <td>{{this.insumo_id}}</td>
+          <td>{{this.cantidad_utilizada}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>
